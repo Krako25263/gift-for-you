@@ -82,13 +82,12 @@
     <div class="gift-box" onclick="openPopup('อยากจะบอกว่ากินข้าวแล้วนะค้าบบบ 😊')">🎁</div>
     <div class="gift-box" onclick="openPopup('ถ้าได้เจอกัน จะซื้อไอติมให้เธอทันที 🍦')">🎁</div>
     <div class="gift-box" onclick="openPopup('ขอส่งความคิดถึงผ่านหน้าจอไปหานะ 💌')">🎁</div>
-    <div class="gift-box" onclick="openPopup('ผมให้หมีตัววนี้ 🧸')">🎁</div>
+    <div class="gift-box" onclick="openPopup('ผมให้หมีตัววนี้น่าาาา 🧸')">🎁</div>
     <div class="gift-box" onclick="openPopup('คิดถึงพี่อะ 🫶')">🎁</div>
   </div>
 
   <div class="popup" id="popup">
     <div class="popup-content" id="popup-message">
-      <!-- ข้อความจะแสดงที่นี่ -->
     </div>
     <button class="close-btn" onclick="closePopup()">ปิด</button>
   </div>
