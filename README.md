@@ -79,11 +79,11 @@
   <h1>เลือกกล่องที่อยากเปิดวันนี้ 🎁</h1>
 
   <div class="gift-container">
-    <div class="gift-box" onclick="openPopup('โคนันสนุกไหมมมมมวันนี้ 😊')">🎁</div>
+    <div class="gift-box" onclick="openPopup('อยากจะบอกว่ากินข้าวแล้วนะค้าบบบ 😊')">🎁</div>
     <div class="gift-box" onclick="openPopup('ถ้าได้เจอกัน จะซื้อไอติมให้เธอทันที 🍦')">🎁</div>
     <div class="gift-box" onclick="openPopup('ขอส่งความคิดถึงผ่านหน้าจอไปหานะ 💌')">🎁</div>
-    <div class="gift-box" onclick="openPopup('ได้ไรกินยังค้าบบบบบบบบบ 🧸')">🎁</div>
-    <div class="gift-box" onclick="openPopup('ทำไรอยู่ค้าบบบบบบบบบ 🫶')">🎁</div>
+    <div class="gift-box" onclick="openPopup('ผมให้หมีตัววนี้ 🧸')">🎁</div>
+    <div class="gift-box" onclick="openPopup('คิดถึงพี่อะ 🫶')">🎁</div>
   </div>
 
   <div class="popup" id="popup">
