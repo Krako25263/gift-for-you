@@ -2,105 +2,134 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>กล่อง 💝</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ให้กำลังใจคนเป็นเมน</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #ffe4ec, #fff);
-      text-align: center;
-      padding: 50px;
+      font-family: 'Noto Sans Thai', sans-serif;
+      background-color: #fff0f5;
+      padding: 20px;
+      max-width: 480px;
+      margin: auto;
     }
-
     h1 {
-      color: #d6336c;
-      font-size: 2.5em;
+      text-align: center;
+      color: #d63384;
     }
-
-    .gift-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-top: 40px;
-    }
-
-    .gift-box {
-      background: #fff0f6;
-      border: 2px dashed #ff99c8;
-      border-radius: 20px;
-      padding: 30px;
-      width: 150px;
-      height: 150px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease;
-      font-size: 1.5em;
-    }
-
-    .gift-box:hover {
-      transform: scale(1.05);
-    }
-
-    .popup {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .popup-content {
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      max-width: 90%;
-      font-size: 1.2em;
-      color: #333;
-    }
-
-    .close-btn {
-      margin-top: 15px;
-      background: #ff99c8;
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 10px;
+      border-radius: 12px;
+      background-color: #ff8fa3;
       border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
+      font-size: 1.1rem;
       color: white;
       cursor: pointer;
     }
-
-    .close-btn:hover {
-      background: #d6336c;
+    .box, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 10px;
+      background: #ffffffcc;
+      border: 1px solid #ddd;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .history {
+      font-size: 0.9rem;
+      margin-top: 10px;
+      background: #fceff1;
+      padding: 10px;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
 
-  <h1>เลือกกล่องที่อยากเปิดวันนี้ 🎁</h1>
+  <h1>❤️ ให้กำลังใจคนเป็นเมน ❤️</h1>
 
-  <div class="gift-container">
-    <div class="gift-box" onclick="openPopup('อยากจะบอกว่ากินข้าวแล้วนะค้าบบบ 😊')">🎁</div>
-    <div class="gift-box" onclick="openPopup('ถ้าได้เจอกัน จะซื้อไอติมให้เธอทันที 🍦')">🎁</div>
-    <div class="gift-box" onclick="openPopup('ขอส่งความคิดถึงผ่านหน้าจอไปหานะ 💌')">🎁</div>
-    <div class="gift-box" onclick="openPopup('ผมให้หมีตัววนี้น่าาาา 🧸')">🎁</div>
-    <div class="gift-box" onclick="openPopup('คิดถึงพี่อะ 🫶')">🎁</div>
-  </div>
+  <button onclick="randomQuote()">💬 สุ่มกำลังใจ</button>
+  <div class="box" id="quoteBox">ข้อความจะปรากฏตรงนี้</div>
 
-  <div class="popup" id="popup">
-    <div class="popup-content" id="popup-message">
-    </div>
-    <button class="close-btn" onclick="closePopup()">ปิด</button>
-  </div>
+  <select onchange="showMoodMessage(this.value)" class="box">
+    <option value="">😌 เลือกอารมณ์วันนี้</option>
+    <option value="sad">😢 เศร้า</option>
+    <option value="angry">😤 หงุดหงิด</option>
+    <option value="lonely">😶 เหงา</option>
+    <option value="tired">😭 เหนื่อยมาก</option>
+    <option value="calm">😌 สงบ</option>
+  </select>
+  <div class="box" id="moodMessage"></div>
+
+  <button onclick="showCute()">😺 ยิ้มหน่อยนะ</button>
+  <img id="cuteImg" src="" style="display:none">
+
+  <textarea id="diaryText" rows="3" placeholder="วันนี้รู้สึกยังไงนะ..."></textarea>
+  <button onclick="saveDiary()">📝 บันทึกความรู้สึก</button>
+  <div class="history" id="diaryHistory"></div>
 
   <script>
-    function openPopup(message) {
-      document.getElementById('popup-message').innerText = message;
-      document.getElementById('popup').style.display = 'flex';
+    const quotes = [
+      "วันนี้อาจจะเหนื่อยหน่อย แต่เธอเก่งมากเลยนะ",
+      "ไม่ต้องฝืนตลอดก็ได้นะ พักเถอะถ้าไม่ไหว",
+      "แม้จะปวด แต่เธอยังยิ้มได้นี่นา น่ารักจะตาย",
+      "เมนมันปวด แต่เธออดทนได้เสมอเลยนะ",
+      "อย่าลืมกินของอุ่นๆ กับพักผ่อนเยอะๆ นะ"
+    ];
+
+    function randomQuote() {
+      const quote = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById("quoteBox").innerText = quote;
     }
 
-    function closePopup() {
-      document.getElementById('popup').style.display = 'none';
+    function showMoodMessage(mood) {
+      const messages = {
+        sad: "ไม่เป็นไรเลยนะที่จะเศร้าบ้าง... น้ำตาก็เป็นการระบายได้เหมือนกัน 💧",
+        angry: "หงุดหงิดได้ แต่อย่าลืมใจดีกับตัวเองด้วยนะ 💖",
+        lonely: "ถึงตอนนี้จะรู้สึกเหงา แต่เธอไม่ได้อยู่คนเดียวหรอกนะ 🌙",
+        tired: "เหนื่อยใช่ไหม... กอดตัวเองแน่นๆ แล้วค่อยๆ หายใจนะ 🤗",
+        calm: "ดีจังเลยที่วันนี้เธอสงบ ขอให้มันอยู่กับเธอนานๆ นะ 🌼"
+      };
+      document.getElementById("moodMessage").innerText = messages[mood] || "";
     }
+
+    const cuteImgs = [
+      "https://i.imgur.com/OBkS5n2.gif",
+      "https://i.imgur.com/NvI6D2Y.gif",
+      "https://i.imgur.com/Bd0Fq4e.gif",
+      "https://i.imgur.com/Ydn9T3k.gif"
+    ];
+
+    function showCute() {
+      const img = cuteImgs[Math.floor(Math.random() * cuteImgs.length)];
+      const cuteImg = document.getElementById("cuteImg");
+      cuteImg.src = img;
+      cuteImg.style.display = "block";
+    }
+
+    function saveDiary() {
+      const text = document.getElementById("diaryText").value.trim();
+      if (text !== "") {
+        const today = new Date().toLocaleDateString("th-TH");
+        localStorage.setItem("menDiary", today + ": " + text);
+        document.getElementById("diaryText").value = "";
+        loadDiary();
+      }
+    }
+
+    function loadDiary() {
+      const entry = localStorage.getItem("menDiary");
+      if (entry) {
+        document.getElementById("diaryHistory").innerText = "ล่าสุด: " + entry;
+      }
+    }
+
+    loadDiary();
   </script>
 
 </body>
